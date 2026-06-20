@@ -1,5 +1,9 @@
 use dioxus::prelude::*;
 
+use crate::enums::signals::ThemeSignal;
+
+const NAVBAR_CSS: Asset = asset!("/assets/navbar.css");
+
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
 pub enum Route {
@@ -44,16 +48,31 @@ pub fn Blog(id: i32) -> Element {
 /// Shared navbar component.
 #[component]
 fn Navbar() -> Element {
+    let mut theme = use_context::<ThemeSignal>().0;
+
     rsx! {
-        div {
-            id: "navbar",
-            {["Index", "Register", "Login", "Game", "Leaderboard"].iter().map(|f| rsx! {
-                Link {
-                    key: "{f}",
-                    to: Route::Home {},
-                    "{f}"
-                }
-            })}
+    document::Link { rel: "stylesheet", href: NAVBAR_CSS }
+    nav {
+        id: "navbar",
+        for f in ["Index", "Register", "Login", "Game", "Leaderboard"] {
+            let route = match f {
+                "Index" => Route::Home {},
+                "Register" => Route::Register {},
+                "Login" => Route::Login {},
+                "Game" => Route::Game {},
+                "Leaderboard" => Route::Leaderboard {},
+                _ => Route::Home {}
+            };
+            Link {
+                to: route,
+                "{f}"
+            }
+    }
+        button {
+            id: "darkmode",
+            onclick: move |_| theme.toggle(),
+            if theme() { "Darkmode" } else { "Lightmode" }
+        }
         }
     }
 }
