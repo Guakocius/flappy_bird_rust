@@ -1,5 +1,5 @@
 [package]
-name = "flappy_bird"
+name = "flappy_bird_rust"
 version = "0.1.0"
 authors = ["Guakocius <engelhardt.alexander@mein.gmx>"]
 edition = "2021"

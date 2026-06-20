@@ -3,7 +3,7 @@
 [web.app]
 
 # HTML title tag content
-title = "flappy_bird"
+title = "flappy_bird_rust"
 
 # include `assets` in web platform
 [web.resource]
